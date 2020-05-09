@@ -11,6 +11,7 @@
 public class ScoreBoard extends javax.swing.JPanel {
     
     private int score;
+    
 
     /**
      * Creates new form ScoreBoard
