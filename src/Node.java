@@ -9,8 +9,13 @@
  * @author victoralonso
  */
 public class Node {
-    private int row;
-    private int col;
+    private int row = 1;
+    private int col = 1;
+    private int elCuerpo[][];
+    
+    public Node() {
+        elCuerpo = new int [row][col];
+    }
     
     // Create the constructor and all the methods you need here
 }

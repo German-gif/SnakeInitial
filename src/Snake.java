@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,15 +18,8 @@ import java.util.ListIterator;
  */
 public class Snake {
     
-    private Direction direction;
+    private Direction direction; //tiene el enum
     
-    
-    
-    
-    
-    
-    
-    private int variablePruebaGithub;
     private List<Node> body = new List<Node>() {
         @Override
         public int size() {
@@ -159,6 +153,8 @@ public class Snake {
     }
     
     public void move() {
+        
+        //aqui las direcciones
         // Finish this method
     }
     

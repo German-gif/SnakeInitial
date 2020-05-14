@@ -1,6 +1,8 @@
 
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.util.Timer;
+import javax.swing.JFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -78,4 +80,25 @@ public class Board extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+}
+
+class initSnake extends JFrame {
+    
+    public initSnake() {
+        setBounds(20, 20, 430, 350);
+        
+        Board gameTable = new Board();
+        
+        this.add(gameTable);
+        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    public static void main (String[] args) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new initSnake().setVisible(true);
+            }
+        });
+    }
 }
