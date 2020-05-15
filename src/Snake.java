@@ -1,5 +1,10 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -16,11 +21,11 @@ import java.util.ListIterator;
  *
  * @author victoralonso
  */
-public class Snake {
+public class Snake extends KeyAdapter {
     
     private Direction direction; //tiene el enum
     
-    private List<Node> body = new List<Node>() {
+    /*private List<Node> body = new List<Node>(); {
         @Override
         public int size() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -135,11 +140,22 @@ public class Snake {
         public List<Node> subList(int fromIndex, int toIndex) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    };
+    };*/
+    
+    private List<Node> body;
     private int remainingNodesToCreate = 0;
+    private Node headSnake;
+    
+    private int widthBody = 10;
+    private int heightBody = 10;
     
     
     public Snake(int row, int col, int size) { // Initial position of the head of the snake and number of inital nodes
+        body = new ArrayList<Node>();
+        
+        headSnake = new Node(10, 10);
+        
+        direction = Direction.LEFT;
         // Finish this method
     }
     
@@ -149,13 +165,18 @@ public class Snake {
     }
     
     public void paint(Graphics g, int squareWidth, int squareHeight) {
+        Util.drawSquare(g, squareWidth, squareWidth, squareWidth, squareHeight, Color.yellow);
+        
+
         // Finish this method. Call Util.drawSquare()
     }
     
     public void move() {
         
+        
         //aqui las direcciones
         // Finish this method
+
     }
     
     
