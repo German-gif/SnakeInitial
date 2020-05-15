@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /*
@@ -13,7 +14,7 @@ import java.awt.Graphics;
  */
 public class Food {
     private Node position;
-    private boolean isSpecial;
+    private static boolean isSpecial;
     
     public Food(Snake snake) { 
         // We pass Snake to the constructor because if the randomnly generated food
@@ -22,6 +23,8 @@ public class Food {
     }
     
     public void paint(Graphics g, int squareWidth, int squareHeight) {
+        Util.drawSquare(g, position.getRow(), position.getCol(), squareWidth, squareHeight, Color.RED);
+
         // Finish this method. Call Util.drawSquare()
     }
     

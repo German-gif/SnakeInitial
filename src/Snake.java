@@ -21,9 +21,9 @@ import java.util.ListIterator;
  *
  * @author victoralonso
  */
-public class Snake extends KeyAdapter {
+public class Snake {
     
-    private Direction direction; //tiene el enum
+    private Direction direction; 
     
     /*private List<Node> body = new List<Node>(); {
         @Override
@@ -149,11 +149,13 @@ public class Snake extends KeyAdapter {
     private int widthBody = 10;
     private int heightBody = 10;
     
+    private Board boardGame = new Board();
+    
     
     public Snake(int row, int col, int size) { // Initial position of the head of the snake and number of inital nodes
         body = new ArrayList<Node>();
         
-        headSnake = new Node(10, 10);
+        headSnake = new Node(widthBody, heightBody);
         
         direction = Direction.LEFT;
         // Finish this method
@@ -164,8 +166,8 @@ public class Snake extends KeyAdapter {
         return true;
     }
     
-    public void paint(Graphics g, int squareWidth, int squareHeight) {
-        Util.drawSquare(g, squareWidth, squareWidth, squareWidth, squareHeight, Color.yellow);
+    public void paint(Graphics g, int positionX, int positionY) {
+        Util.drawSquare(g, positionX, positionY,  headSnake.getRow(), headSnake.getCol(), Color.yellow);
         
 
         // Finish this method. Call Util.drawSquare()
@@ -173,6 +175,22 @@ public class Snake extends KeyAdapter {
     
     public void move() {
         
+        switch(direction) {
+            
+            case UP:
+            
+                
+            break;
+            
+            case DOWN:
+            break;
+            
+            case LEFT:
+            break;
+            
+            case RIGHT:
+            break;
+        }
         
         //aqui las direcciones
         // Finish this method

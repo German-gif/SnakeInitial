@@ -6,37 +6,26 @@
 
 /**
  *
- * @author victoralonso
+ * @author German
  */
-public class ScoreBoard extends javax.swing.JPanel {
-    
-    private int score;
-    
+public class useScoreBoard extends javax.swing.JPanel {
 
+    private int score = 0;
     /**
-     * Creates new form ScoreBoard
+     * Creates new form useFulScoreBoard
      */
-    public ScoreBoard() {
-        
-        score = 0;
+    public useScoreBoard() {
         
         initComponents();
         
-        do {            
-            
-            jTextField1.setText("Puntuación: " + Integer.toString(score));
-            incrementScore(score);
-            
-        } while (true);
+        incrementScore(score);
         
         
     }
     
     public void incrementScore(int increment) {
-       
-        
-
-// Finish this method. And add all you need to the class
+        score = score + increment;
+        jLabel1.setText("Your score: " + String.valueOf(score));
     }
 
     /**
@@ -48,31 +37,31 @@ public class ScoreBoard extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(102, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 153));
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 51));
-        jTextField1.setText("jTextField1");
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 303, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(311, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

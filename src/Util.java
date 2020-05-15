@@ -14,7 +14,8 @@ import java.awt.*;
 public class Util {
     
     public static void drawSquare(Graphics g, int row, int colo, int squareWidt, int squareHeight, Color color) {
-        
+        g.setColor(color);
+        g.fillRect(row, colo, squareWidt, squareHeight);
     }
     
 }

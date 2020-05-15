@@ -1,8 +1,11 @@
 
+
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Timer;
-import javax.swing.JFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,7 +17,7 @@ import javax.swing.JFrame;
  *
  * @author victoralonso
  */
-public class Board extends javax.swing.JPanel {
+public class Board extends javax.swing.JPanel implements KeyListener {
     
     private int numRows;
     private int numCols;
@@ -24,6 +27,7 @@ public class Board extends javax.swing.JPanel {
     private Timer snakeTimer;
     private Timer specialFoodTimer;
     private int DeltaTime;
+    Direction keepDirection = Direction.LEFT;
 
     /**
      * Creates new form Board
@@ -34,10 +38,21 @@ public class Board extends javax.swing.JPanel {
     }
     
     private void myInit() {
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        this.numRows = dim.width;
+        this.numCols = dim.height;
+        setSize(this.numRows, this.numCols);
+        addKeyListener(this);
+        
+        
+
         // Finish this method
     }
     
     public Board(int numRows, int numCols) {
+        
         // Finish this method
     }
     
@@ -50,11 +65,15 @@ public class Board extends javax.swing.JPanel {
         // Finish this method
     }
     
-    @Override 
+    /*@Override 
     protected void paintComponent(Graphics g)  {
+        super.paintComponent(g);
+        snake.paint(g, this.numRows/2, this.numCols/2);
         // Finish this method
         // Paint the Snake and the food here
-    }
+    }*/
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,6 +83,8 @@ public class Board extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setBackground(new java.awt.Color(153, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -77,28 +98,40 @@ public class Board extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode()== KeyEvent.VK_UP) {
+            if(keepDirection != Direction.DOWN) {
+                keepDirection = Direction.UP;
+            }
+        } else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+            if(keepDirection != Direction.UP) {
+                keepDirection = Direction.DOWN;
+            }
+        }else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if(keepDirection != Direction.RIGHT) {
+                keepDirection = Direction.LEFT;
+            }
+        }else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if(keepDirection != Direction.LEFT) {
+                keepDirection = Direction.RIGHT;
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
 
-class initSnake extends JFrame {
-    
-    public initSnake() {
-        setBounds(20, 20, 430, 350);
-        
-        Board gameTable = new Board();
-        
-        this.add(gameTable);
-        
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-    
-    public static void main (String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new initSnake().setVisible(true);
-            }
-        });
-    }
-}
+

@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,13 +11,29 @@
  * @author victoralonso
  */
 public class Node {
-    private int row = 1;
-    private int col = 1;
-    private int elCuerpo[][];
+    private int row;
     
-    public Node() {
-        elCuerpo = new int [row][col];
+    private int col;
+    
+    private int rowPosition;
+    private int colPosition;
+    
+    private Direction direccion;
+    
+    public Node(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
+    
+    public int getRow() {
+        return row;
+    }
+    
+    public int getCol() {
+        return col;
+    }
+    
+    
     
     // Create the constructor and all the methods you need here
 }
