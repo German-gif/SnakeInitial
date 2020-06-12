@@ -43,7 +43,11 @@ public class Food {
     }
     
     public void paint(Graphics g, int squareWidth, int squareHeight) {
-        //snake.paint(g, squareWidth, squareWidth);
+        for(int i = 0; i < snake.getSizeApples(); i++) {
+            g.setColor(Color.BLACK);
+            g.fillRect(snake.getNodeFood(i).getRow()*10, snake.getNodeFood(i).getCol()*10, 10, 10);
+            Util.drawSquare(g, snake.getNodeFood(i).getRow(), snake.getNodeFood(i).getCol(), 10, 10, Color.RED);
+        }
 
         // Finish this method. Call Util.drawSquare()
     }

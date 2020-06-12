@@ -1,4 +1,5 @@
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
@@ -159,6 +160,7 @@ public class Snake {
     private int initialNodes;
     private boolean coincideFoodAndBody = false;
     private Random r;
+    private List<Node> apples;
     
     
     public Snake(int row, int col, int size) { // Initial position of the head of the snake and number of inital nodes
@@ -175,6 +177,7 @@ public class Snake {
         node = new Node(row, col, 10);
         
         direction = Direction.DOWN;
+        apples = new ArrayList<Node>();
         // Finish this method
     }
     
@@ -182,9 +185,9 @@ public class Snake {
         return body.size();
     }
     
-    /*public Node getPositionBody(int numPosition) {
+    public Node getPositionBody(int numPosition) {
         return body.get(numPosition);
-    }*/
+    }
     
     /*public void pintaNodos(Graphics g) {
         for(int i = 0; i < body.size(); i++) {
@@ -219,7 +222,7 @@ public class Snake {
         return direction;
     }
     
-    /*public boolean checkCoincideFoodAndBody(int xgenerateApple, int ygenerateApple) {
+    public boolean checkCoincideFoodAndBody(int xgenerateApple, int ygenerateApple) {
         for(int i = 0; i < body.size(); i++) {
             if(body.get(i).getRow() == xgenerateApple &&
                     body.get(i).getCol() == ygenerateApple) {
@@ -234,8 +237,16 @@ public class Snake {
         }
     }
     
+    public Node getNodeFood(int numPosition) {
+        return apples.get(numPosition);
+    }
+    
+    public int getSizeApples() {
+        return apples.size();
+    }
+    
     public void addNodeFood(Node node) {
-        body.add(node);
+        apples.add(node);
     }
     
     public void otherNode(int nuevoNodo ) {
@@ -244,7 +255,7 @@ public class Snake {
     
     public void eliminarFood(int i) {
         body.remove(i);
-    }*/
+    }
     
     public boolean canMove(int row, int col) {
         

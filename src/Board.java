@@ -95,7 +95,7 @@ public class Board extends javax.swing.JPanel implements Runnable{
         }
         
         snake.paint(g, snake.getxPositionNode(), snake.getyPositionNode());
-        //food.paint(g, WIDTH, HEIGHT);
+        food.paint(g, 10, 10);
         //Y SI LO AÑADES YA PINTADO??
         
         //snake.paint(g, this.numRows/2, this.numCols/2);
@@ -110,9 +110,9 @@ public class Board extends javax.swing.JPanel implements Runnable{
             snake.addNode();
         }
         
-        /*if(food.getSnake().getSizeBody()== 0) {
+        if(snake.getSizeApples()==0) {
             food = new Food(snake);
-        }*/
+        }
         /*for(int i = 0; i < food.getSnake().getSizeBody(); i++) {
             if(snake.getxPositionNode() == food.getSnake()) {
                 snake.otherNode(initialSizeNodes+1);
