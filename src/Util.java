@@ -14,8 +14,12 @@ import java.awt.*;
 public class Util {
     
     public static void drawSquare(Graphics g, int row, int colo, int squareWidt, int squareHeight, Color color) {
+        /*g.setColor(color);
+        g.fillRect(row, colo, squareWidt, squareHeight);*/
+        /*g.setColor(Color.BLACK);
+        g.fillRect(row*squareWidt, colo*squareHeight, squareWidt, squareHeight);*/
         g.setColor(color);
-        g.fillRect(row, colo, squareWidt, squareHeight);
+        g.fillRect(row *squareWidt+2, colo*squareHeight+2, squareWidt-4, squareHeight-4);
     }
     
 }

@@ -1,8 +1,10 @@
 
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
@@ -17,10 +19,10 @@ import java.util.Timer;
  *
  * @author victoralonso
  */
-public class Board extends javax.swing.JPanel implements KeyListener {
+public class Board extends javax.swing.JPanel implements Runnable{
     
-    private int numRows;
-    private int numCols;
+    private int numRows = 450;
+    private int numCols = 450;
     private Snake snake;
     private Food food;
     private Food specialFood;
@@ -28,23 +30,37 @@ public class Board extends javax.swing.JPanel implements KeyListener {
     private Timer specialFoodTimer;
     private int DeltaTime;
     Direction keepDirection = Direction.LEFT;
-
+    private Thread thread;
+    private boolean running = false;
+    private int xCoor = 10, yCoor = 10;
+    private int initialSizeNodes = 5;
+    
+    private int ticks = 0;
+    
+    private Key key;
     /**
      * Creates new form Board
      */
     public Board() {
+        
+        setFocusable(true);
+        key = new Key();
+        addKeyListener(key);
+        snake = new Snake(xCoor, yCoor, initialSizeNodes);
+        //food = new Food(snake);
+        start();
         initComponents();
         myInit();
     }
     
     private void myInit() {
         
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        /*Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         
         this.numRows = dim.width;
         this.numCols = dim.height;
         setSize(this.numRows, this.numCols);
-        addKeyListener(this);
+        addKeyListener(this);*/
         
         
 
@@ -65,14 +81,69 @@ public class Board extends javax.swing.JPanel implements KeyListener {
         // Finish this method
     }
     
-    /*@Override 
+    @Override 
     protected void paintComponent(Graphics g)  {
         super.paintComponent(g);
-        snake.paint(g, this.numRows/2, this.numCols/2);
+        
+        g.clearRect(0, 0, numRows, numCols);
+        g.setColor(Color.BLACK);
+        for(int i = 0; i < numRows / 10; i++) {
+            g.drawLine(i*10, 0, i*10, numCols);
+        }
+        for(int i = 0; i < numCols / 10; i++) {
+            g.drawLine(0, i*10, numRows , i*10);
+        }
+        
+        snake.paint(g, snake.getxPositionNode(), snake.getyPositionNode());
+        //food.paint(g, WIDTH, HEIGHT);
+        //Y SI LO AÑADES YA PINTADO??
+        
+        //snake.paint(g, this.numRows/2, this.numCols/2);
         // Finish this method
         // Paint the Snake and the food here
-    }*/
+    }
     
+    public void tick() {
+        System.out.println("Running...");
+        
+        if(snake.getSizeBody()== 0) {
+            snake.addNode();
+        }
+        
+        /*if(food.getSnake().getSizeBody()== 0) {
+            food = new Food(snake);
+        }*/
+        /*for(int i = 0; i < food.getSnake().getSizeBody(); i++) {
+            if(snake.getxPositionNode() == food.getSnake()) {
+                snake.otherNode(initialSizeNodes+1);
+                food.getSnake().eliminarFood(i);
+                i--;
+            }
+        }*/
+        
+        ticks++;
+        
+        if(ticks > 600) {
+            snake.move();
+            
+            ticks = 0;
+            
+            //snake.addNode();
+            snake.eliminaPosZero();
+        }
+    }
+    
+    public void start() {
+        running = true;
+        thread = new Thread(this,"Game Loop");
+        thread.start();
+    }
+    
+    public void stop() {
+        
+    }
+    
+
     
 
     /**
@@ -84,50 +155,51 @@ public class Board extends javax.swing.JPanel implements KeyListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(153, 255, 255));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void run() {
+        while(running) {
+            tick();
+            repaint();
+        }
     }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode()== KeyEvent.VK_UP) {
-            if(keepDirection != Direction.DOWN) {
-                keepDirection = Direction.UP;
+    
+    private class Key extends KeyAdapter {
+        
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            
+            if(key == KeyEvent.VK_RIGHT && 
+                    Snake.getDirection() != Direction.LEFT) {
+                Snake.setDirection(Direction.RIGHT);
             }
-        } else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-            if(keepDirection != Direction.UP) {
-                keepDirection = Direction.DOWN;
+            if(key == KeyEvent.VK_LEFT && 
+                    Snake.getDirection() != Direction.RIGHT) {
+                Snake.setDirection(Direction.LEFT);
             }
-        }else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if(keepDirection != Direction.RIGHT) {
-                keepDirection = Direction.LEFT;
+            if(key == KeyEvent.VK_UP && 
+                    Snake.getDirection() != Direction.DOWN) {
+                Snake.setDirection(Direction.UP);
             }
-        }else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if(keepDirection != Direction.LEFT) {
-                keepDirection = Direction.RIGHT;
+            if(key == KeyEvent.VK_DOWN && 
+                    Snake.getDirection() != Direction.UP) {
+                Snake.setDirection(Direction.DOWN);
             }
         }
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

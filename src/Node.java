@@ -1,4 +1,8 @@
 
+import java.awt.Color;
+import java.awt.Graphics;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,14 +19,31 @@ public class Node {
     
     private int col;
     
-    private int rowPosition;
+    private int width;
+    
+    private int height;
+    
+    /*private int rowPosition;
     private int colPosition;
     
-    private Direction direccion;
+    private Direction direccion;*/
     
-    public Node(int row, int col) {
+    public Node(int row, int col, int tileSize) {
         this.row = row;
         this.col = col;
+        width = tileSize;
+        height = tileSize;
+    }
+    
+    public void tick() {
+        
+    }
+    
+    public void draw(Graphics g) {
+         Util.drawSquare(g, row, col, width, height, Color.GREEN);
+         //ESTA ESTA INCOMPLETO NOS FALTA RETOCAR ESTA EN EL SENTIDO DE
+         //QUE ESTA TIENE UNOS BORDES NEGROS ALREDEDOR DE LA SERPIENTE
+         //DEL NODO
     }
     
     public int getRow() {
@@ -31,6 +52,14 @@ public class Node {
     
     public int getCol() {
         return col;
+    }
+    
+    public void setRow(int row) {
+        this.row = row;
+    }
+    
+    public void setCol(int col) {
+        this.col = col;
     }
     
     

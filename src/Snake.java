@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 
 
 /*
@@ -23,8 +24,8 @@ import java.util.ListIterator;
  */
 public class Snake {
     
-    private Direction direction; 
-    
+    private static Direction direction; 
+    private int chivato = 1;
     /*private List<Node> body = new List<Node>(); {
         @Override
         public int size() {
@@ -144,38 +145,140 @@ public class Snake {
     
     private List<Node> body;
     private int remainingNodesToCreate = 0;
-    private Node headSnake;
+    private Node node;
     
-    private int widthBody = 10;
-    private int heightBody = 10;
+    /*private int widthBody = 10;
+    private int heightBody = 10;*/
     
-    private Board boardGame = new Board();
+    //atributos que estaran en board
+    //private int xCoor = 10, yCoor = 10;
+    //private int size = 5;
+    
+    //private Board boardGame = new Board();
+    private int xCoor, yCoor;
+    private int initialNodes;
+    private boolean coincideFoodAndBody = false;
+    private Random r;
     
     
     public Snake(int row, int col, int size) { // Initial position of the head of the snake and number of inital nodes
+        
+        //La variable size esta de parametro que esta en el
+        //constructor es el size que dice con los nodos
+        //con los que empieza la serpiente
+        r = new Random();
+        initialNodes = size;
         body = new ArrayList<Node>();
+        xCoor = row;
+        yCoor = col;
         
-        headSnake = new Node(widthBody, heightBody);
+        node = new Node(row, col, 10);
         
-        direction = Direction.LEFT;
+        direction = Direction.DOWN;
         // Finish this method
     }
     
+    public int getSizeBody() {
+        return body.size();
+    }
+    
+    /*public Node getPositionBody(int numPosition) {
+        return body.get(numPosition);
+    }*/
+    
+    /*public void pintaNodos(Graphics g) {
+        for(int i = 0; i < body.size(); i++) {
+            body.get(i).paint();
+        }
+    }*/
+    
+    public void addNode() {
+        body.add(node);
+    }
+    
+    public int getxPositionNode() {
+        
+        return node.getRow();
+    }
+    
+    public int getyPositionNode() {
+        return node.getCol();
+    }
+    
+    public void eliminaPosZero() {
+        if(body.size() > initialNodes) {
+            body.remove(0);
+        }
+    }
+    
+    public static void setDirection(Direction direction) {
+        Snake.direction = direction;
+    }
+    
+    public static Direction getDirection() {
+        return direction;
+    }
+    
+    /*public boolean checkCoincideFoodAndBody(int xgenerateApple, int ygenerateApple) {
+        for(int i = 0; i < body.size(); i++) {
+            if(body.get(i).getRow() == xgenerateApple &&
+                    body.get(i).getCol() == ygenerateApple) {
+                coincideFoodAndBody = true;
+            }
+        }
+        
+        if(coincideFoodAndBody) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void addNodeFood(Node node) {
+        body.add(node);
+    }
+    
+    public void otherNode(int nuevoNodo ) {
+        initialNodes = nuevoNodo;
+    }
+    
+    public void eliminarFood(int i) {
+        body.remove(i);
+    }*/
+    
     public boolean canMove(int row, int col) {
-        // Finish this method
+        
+    // Finish this method
         return true;
     }
     
     public void paint(Graphics g, int positionX, int positionY) {
-        Util.drawSquare(g, positionX, positionY,  headSnake.getRow(), headSnake.getCol(), Color.yellow);
+        
+        for(int i = 0; i < body.size(); i++) {
+            //System.out.println(i);
+            g.setColor(Color.BLACK);
+            g.fillRect(body.get(i).getRow()*10, body.get(i).getCol()*10, 10, 10);
+            Util.drawSquare(g, body.get(i).getRow(), body.get(i).getCol(), 10, 10, Color.GREEN);
+            Util.drawSquare(g, positionX, positionY, 10, 10, Color.GREEN);
+            //SIN ESTA ULTIMA LINEA DE CODIGO EL PROGRAMA TAMBIEN FUNCIONARIA
+            //XD
+        }
+        
         
 
         // Finish this method. Call Util.drawSquare()
     }
     
     public void move() {
+        if(direction == Direction.RIGHT) node.setRow(node.getRow()+1); /*node.setRow(xCoor++);*/
+        if(direction == Direction.LEFT) node.setRow(node.getRow()-1);
+        if(direction == Direction.UP) node.setCol(node.getCol()-1);
+        if(direction == Direction.DOWN) node.setCol(node.getCol()+1);
         
-        switch(direction) {
+        //node = new Node(xCoor, yCoor, 10);
+        node = new Node(node.getRow(), node.getCol(), 10);
+        body.add(node);
+        /*switch(direction) {
             
             case UP:
             
@@ -190,7 +293,16 @@ public class Snake {
             
             case RIGHT:
             break;
-        }
+        }*/
+        //int row = node.getRow();
+        //int col = node.getCol();
+        //if(right) node.setRow(node.getRow() + 1);
+        //ACUERDATE DE ESTE headSnake.getRow() + 1
+        //a lo mejor no es correcto y toca cambiarlo
+        //por forma variable
+        //if(left) node.setRow(row--);
+        //if(up) node.setCol(col--);
+        //if(down) node.setCol(col++);
         
         //aqui las direcciones
         // Finish this method
