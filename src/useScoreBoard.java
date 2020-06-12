@@ -8,7 +8,7 @@
  *
  * @author German
  */
-public class useScoreBoard extends javax.swing.JPanel {
+public class useScoreBoard extends javax.swing.JPanel implements ScoreBehaviour {
 
     private int score = 0;
     /**
@@ -21,11 +21,6 @@ public class useScoreBoard extends javax.swing.JPanel {
         incrementScore(score);
         
         
-    }
-    
-    public void incrementScore(int increment) {
-        score = score + increment;
-        jLabel1.setText("Your score: " + String.valueOf(score));
     }
 
     /**
@@ -64,4 +59,17 @@ public class useScoreBoard extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void incrementScore(int increment) {
+        score = score + increment;
+        jLabel1.setText("Your score: " + String.valueOf(score));
+    }
+
+    @Override
+    public void resetScore() {
+        score = 0;
+    }
+
+    
 }

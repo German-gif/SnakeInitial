@@ -8,6 +8,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,6 +40,11 @@ public class Board extends javax.swing.JPanel implements Runnable{
     private int ticks = 0;
     
     private Key key;
+    
+    private boolean haColisionado = false;
+    
+    //private useScoreBoard marcador;
+    private int score=1;
     /**
      * Creates new form Board
      */
@@ -47,6 +54,7 @@ public class Board extends javax.swing.JPanel implements Runnable{
         key = new Key();
         addKeyListener(key);
         snake = new Snake(xCoor, yCoor, initialSizeNodes);
+        //marcador = new useScoreBoard();
         //food = new Food(snake);
         start();
         initComponents();
@@ -74,7 +82,14 @@ public class Board extends javax.swing.JPanel implements Runnable{
     
     public boolean colideFood() {
         // Finish this method
+        for(int i = 0; i < snake.getSizeApples(); i++) {
+            if(snake.getPositionBody(snake.getSizeBody()-1).getRow() == snake.getNodeFood(i).getRow() &&
+                    snake.getPositionBody(snake.getSizeBody()-1).getCol() == snake.getNodeFood(i).getCol()) {
+                return true;
+            }
+        }
         return false;
+        
     }
     
     public void gameOver() {
@@ -113,6 +128,48 @@ public class Board extends javax.swing.JPanel implements Runnable{
         if(snake.getSizeApples()==0) {
             food = new Food(snake);
         }
+        
+        /*for(int i = 0; i < snake.getSizeApples(); i++) {
+            if(snake.getPositionBody(snake.getSizeBody()-1).getRow() == snake.getNodeFood(i).getRow() &&
+                    snake.getPositionBody(snake.getSizeBody()-1).getCol() == snake.getNodeFood(i).getCol()) {
+                snake.incrementinitialNodes();
+            snake.eliminarFood(0);
+            }
+        }*/
+        if(colideFood()) {
+            snake.incrementinitialNodes();
+            //marcador.incrementScore(score);
+            score++;
+            snake.eliminarFood(0);
+        }
+        
+        /*System.out.println("Posicion x: " + snake.getPositionBody(snake.getSizeBody()-1).getRow() 
+                + "Posicion y; " + snake.getPositionBody(snake.getSizeBody()-1).getCol());
+        System.out.println("Posicion x: " + snake.getPositionBody(0).getRow() 
+                + "Posicion y; " + snake.getPositionBody(0).getCol());*/
+        
+        
+        
+        if(snake.getPositionBody(snake.getSizeBody()-1).getRow() <= 0 ||
+                snake.getPositionBody(snake.getSizeBody()-1).getRow() >43 ||
+                snake.getPositionBody(snake.getSizeBody()-1).getCol() <= 0 ||
+                snake.getPositionBody(snake.getSizeBody()-1).getCol() > 43) {
+            stop();
+        }
+        
+        
+        
+        /*for(int i = 0; i < snake.getSizeBody(); i++) {
+            if(snake.getPositionBody(snake.getSizeBody()-1).getRow() == snake.getPositionBody(i).getRow() &&
+                    snake.getPositionBody(snake.getSizeBody()-1).getCol() == snake.getPositionBody(i).getCol()) {
+                if(i != snake.getSizeBody()-1) {
+                    stop();
+                }
+            }
+        }*/
+        
+            
+        
         /*for(int i = 0; i < food.getSnake().getSizeBody(); i++) {
             if(snake.getxPositionNode() == food.getSnake()) {
                 snake.otherNode(initialSizeNodes+1);
@@ -130,6 +187,18 @@ public class Board extends javax.swing.JPanel implements Runnable{
             
             //snake.addNode();
             snake.eliminaPosZero();
+            
+            /*if(snake.getSizeBody() > 5) {
+            for(int i = 0; i < snake.getSizeBody(); i++) {
+                if(snake.getPositionBody(snake.getSizeBody()-1).getRow() == snake.getPositionBody(i).getRow()
+                        && snake.getPositionBody(snake.getSizeBody()-1).getCol() == snake.getPositionBody(i).getCol()) {
+                    if(i != snake.getSizeBody()-1) {
+                    System.out.println("COINCIDEEEEE");
+                    stop();
+                    }
+                }
+            }
+        }*/
         }
     }
     
@@ -140,7 +209,13 @@ public class Board extends javax.swing.JPanel implements Runnable{
     }
     
     public void stop() {
-        
+        running = false;
+        try {
+            System.out.println("Game Over");
+            thread.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 

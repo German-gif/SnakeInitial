@@ -249,12 +249,16 @@ public class Snake {
         apples.add(node);
     }
     
-    public void otherNode(int nuevoNodo ) {
-        initialNodes = nuevoNodo;
+    public void incrementinitialNodes() {
+        initialNodes++;
+    }
+    
+    public int getinitialNodes() {
+        return initialNodes;
     }
     
     public void eliminarFood(int i) {
-        body.remove(i);
+        apples.remove(i);
     }
     
     public boolean canMove(int row, int col) {
@@ -289,6 +293,10 @@ public class Snake {
         //node = new Node(xCoor, yCoor, 10);
         node = new Node(node.getRow(), node.getCol(), 10);
         body.add(node);
+        System.out.println("Posicion x: " + node.getRow() + "Posicion y; "
+        + node.getCol());
+        System.out.println("Posicion x: " + body.get(0).getRow() + "Posicion y:" 
+                + body.get(0).getCol());
         /*switch(direction) {
             
             case UP:
