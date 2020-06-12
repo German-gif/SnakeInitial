@@ -22,6 +22,7 @@ public class iniciandoSnake extends javax.swing.JFrame {
         setTitle("GAME_SNAKE");
         setResizable(false);
         
+        
         initComponents();
     }
 

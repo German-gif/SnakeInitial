@@ -35,10 +35,6 @@ public class Node {
         height = tileSize;
     }
     
-    public void tick() {
-        
-    }
-    
     public void draw(Graphics g) {
          Util.drawSquare(g, row, col, width, height, Color.GREEN);
          //ESTA ESTA INCOMPLETO NOS FALTA RETOCAR ESTA EN EL SENTIDO DE

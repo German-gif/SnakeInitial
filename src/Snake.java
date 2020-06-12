@@ -25,125 +25,6 @@ import java.util.Random;
  */
 public class Snake {
     
-    private static Direction direction; 
-    private int chivato = 1;
-    /*private List<Node> body = new List<Node>(); {
-        @Override
-        public int size() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean isEmpty() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean contains(Object o) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public Iterator<Node> iterator() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public Object[] toArray() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public <T> T[] toArray(T[] a) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean add(Node e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean remove(Object o) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> c) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean addAll(Collection<? extends Node> c) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean addAll(int index, Collection<? extends Node> c) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> c) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean retainAll(Collection<?> c) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void clear() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public Node get(int index) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public Node set(int index, Node element) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void add(int index, Node element) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public Node remove(int index) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public int indexOf(Object o) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public int lastIndexOf(Object o) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public ListIterator<Node> listIterator() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public ListIterator<Node> listIterator(int index) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public List<Node> subList(int fromIndex, int toIndex) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    };*/
-    
     private List<Node> body;
     private int remainingNodesToCreate = 0;
     private Node node;
@@ -156,6 +37,7 @@ public class Snake {
     //private int size = 5;
     
     //private Board boardGame = new Board();
+    private static Direction direction; 
     private int xCoor, yCoor;
     private int initialNodes;
     private boolean coincideFoodAndBody = false;
@@ -165,15 +47,18 @@ public class Snake {
     
     public Snake(int row, int col, int size) { // Initial position of the head of the snake and number of inital nodes
         
-        //La variable size esta de parametro que esta en el
-        //constructor es el size que dice con los nodos
-        //con los que empieza la serpiente
         r = new Random();
+        
+        //esta variable guarda el tamaño inicial de la serpiente
         initialNodes = size;
+        
         body = new ArrayList<Node>();
+        
+        //estas dos variables guardan la posicion del primer nodo en principio
         xCoor = row;
         yCoor = col;
         
+        //el 10 es al ancho y alto que tendra el nodo
         node = new Node(row, col, 10);
         
         direction = Direction.DOWN;
@@ -188,12 +73,6 @@ public class Snake {
     public Node getPositionBody(int numPosition) {
         return body.get(numPosition);
     }
-    
-    /*public void pintaNodos(Graphics g) {
-        for(int i = 0; i < body.size(); i++) {
-            body.get(i).paint();
-        }
-    }*/
     
     public void addNode() {
         body.add(node);

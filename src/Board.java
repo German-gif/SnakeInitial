@@ -31,17 +31,19 @@ public class Board extends javax.swing.JPanel implements Runnable{
     private Timer snakeTimer;
     private Timer specialFoodTimer;
     private int DeltaTime;
-    Direction keepDirection = Direction.LEFT;
+    
     private Thread thread;
     private boolean running = false;
     private int xCoor = 10, yCoor = 10;
     private int initialSizeNodes = 5;
     
+    //variabel que nos ayudará a controlar 
+    //la velocidad con la que se moverá la serpiente
     private int ticks = 0;
     
     private Key key;
     
-    private boolean haColisionado = false;
+    
     
     //private useScoreBoard marcador;
     private int score=1;
@@ -53,9 +55,16 @@ public class Board extends javax.swing.JPanel implements Runnable{
         setFocusable(true);
         key = new Key();
         addKeyListener(key);
+        
         snake = new Snake(xCoor, yCoor, initialSizeNodes);
         //marcador = new useScoreBoard();
         //food = new Food(snake);
+        //el metodo start servirá para iniciar el Thread y dentro
+        //de este método cambiará la variable running a true y también esta 
+        //invocará al metodo run() ya que esta contiene un bucle while que
+        //mientras running sea "true" llamará a un método importante porque 
+        //se encargará del movimiento del snake y de la aparición de los nodos
+        //y manzanas
         start();
         initComponents();
         myInit();
@@ -80,6 +89,9 @@ public class Board extends javax.swing.JPanel implements Runnable{
         // Finish this method
     }
     
+    //Método que comprueba si la cabeza de la serpiente ha chocacdo o
+    //ya esta encima de la posicion de una manzana
+    //si ya ha alcanzado a una manzana retornará un true y  sino false
     public boolean colideFood() {
         // Finish this method
         for(int i = 0; i < snake.getSizeApples(); i++) {
@@ -99,7 +111,7 @@ public class Board extends javax.swing.JPanel implements Runnable{
     @Override 
     protected void paintComponent(Graphics g)  {
         super.paintComponent(g);
-        
+        //----PINTA LAS LINEAS DE CUADROS DEL TABLERO----------
         g.clearRect(0, 0, numRows, numCols);
         g.setColor(Color.BLACK);
         for(int i = 0; i < numRows / 10; i++) {
@@ -108,97 +120,77 @@ public class Board extends javax.swing.JPanel implements Runnable{
         for(int i = 0; i < numCols / 10; i++) {
             g.drawLine(0, i*10, numRows , i*10);
         }
+        //------------------------------------
         
+        //PINTA SNAKE
         snake.paint(g, snake.getxPositionNode(), snake.getyPositionNode());
-        food.paint(g, 10, 10);
-        //Y SI LO AÑADES YA PINTADO??
         
-        //snake.paint(g, this.numRows/2, this.numCols/2);
-        // Finish this method
-        // Paint the Snake and the food here
+        //PINTA FOOD
+        food.paint(g, 10, 10);
+    
     }
     
     public void tick() {
         System.out.println("Running...");
         
+        //Condicion que solo al principio añade el primer nodo al 
+        //Arraylist body
         if(snake.getSizeBody()== 0) {
             snake.addNode();
         }
-        
+        //condicion que crea una manzana
         if(snake.getSizeApples()==0) {
             food = new Food(snake);
         }
         
-        /*for(int i = 0; i < snake.getSizeApples(); i++) {
-            if(snake.getPositionBody(snake.getSizeBody()-1).getRow() == snake.getNodeFood(i).getRow() &&
-                    snake.getPositionBody(snake.getSizeBody()-1).getCol() == snake.getNodeFood(i).getCol()) {
-                snake.incrementinitialNodes();
-            snake.eliminarFood(0);
-            }
-        }*/
+        //si la condicion se cumple se incrementará el atributo de Snake 
+        //llamado initialNodes y con el método eliminarFood() lo que hacemos
+        //es eliminar la manzana porque la  cabeza de la serpiente ya ha
+        //pasado por encima
         if(colideFood()) {
             snake.incrementinitialNodes();
-            //marcador.incrementScore(score);
             score++;
             snake.eliminarFood(0);
         }
         
-        /*System.out.println("Posicion x: " + snake.getPositionBody(snake.getSizeBody()-1).getRow() 
-                + "Posicion y; " + snake.getPositionBody(snake.getSizeBody()-1).getCol());
-        System.out.println("Posicion x: " + snake.getPositionBody(0).getRow() 
-                + "Posicion y; " + snake.getPositionBody(0).getCol());*/
-        
-        
-        
+        //Condicion que comprueba si la serpiente no se  ha chocado
+        //con las paredes
         if(snake.getPositionBody(snake.getSizeBody()-1).getRow() <= 0 ||
                 snake.getPositionBody(snake.getSizeBody()-1).getRow() >43 ||
                 snake.getPositionBody(snake.getSizeBody()-1).getCol() <= 0 ||
                 snake.getPositionBody(snake.getSizeBody()-1).getCol() > 43) {
+            //Y si ha chocado llamará al método stop() que pondrá la variable
+            //running a "false" y entonces el bucle while del método run() al ver
+            //que ya no se cumple su condición dejará de utilizar el metodo tick()
+            //y el metodo repaint()
             stop();
         }
         
-        
-        
-        /*for(int i = 0; i < snake.getSizeBody(); i++) {
-            if(snake.getPositionBody(snake.getSizeBody()-1).getRow() == snake.getPositionBody(i).getRow() &&
-                    snake.getPositionBody(snake.getSizeBody()-1).getCol() == snake.getPositionBody(i).getCol()) {
-                if(i != snake.getSizeBody()-1) {
-                    stop();
-                }
-            }
-        }*/
-        
-            
-        
-        /*for(int i = 0; i < food.getSnake().getSizeBody(); i++) {
-            if(snake.getxPositionNode() == food.getSnake()) {
-                snake.otherNode(initialSizeNodes+1);
-                food.getSnake().eliminarFood(i);
-                i--;
-            }
-        }*/
-        
         ticks++;
-        
-        if(ticks > 600) {
+        //cuando la variable ticks sea mayor que 600 
+        //llamará al método move() de Snake y dependiendo de la clase Key y el
+        //metodo keyPressed, se moverá la serpiente dependiendo del  valor
+        //que tenga el atributo direction de la clase Snake
+        //cuanto mas pequeña sea el número con el que se tiene que comparar
+        //la variable ticks más rápido irá la serpiente porque no demorará 
+        //tanto la variable ticks en superar esa cifra
+        if(ticks > 800) {
             snake.move();
             
             ticks = 0;
             
-            //snake.addNode();
+            //Metodo importante también ya que en cuanto la cabeza de la 
+            //serpiente se haya comido una manzana como el atributo de Snake
+            //initialNodes habrá incrementado en 1 su valor con la condición que
+            //lleva este método la cuál es:
+            /*if(body.size() > initialNodes) {
+                body.remove(0);
+              }*/
+            //ya que ha incrementado initialNodes nos permitirá crear un nodo 
+            //más y el método remove(0); nos servirá para eliminar la cola 
+            //para que el tamaño de la serpiente al moverse sea fijo hasta que
+            //coma una manzana
             snake.eliminaPosZero();
-            
-            /*if(snake.getSizeBody() > 5) {
-            for(int i = 0; i < snake.getSizeBody(); i++) {
-                if(snake.getPositionBody(snake.getSizeBody()-1).getRow() == snake.getPositionBody(i).getRow()
-                        && snake.getPositionBody(snake.getSizeBody()-1).getCol() == snake.getPositionBody(i).getCol()) {
-                    if(i != snake.getSizeBody()-1) {
-                    System.out.println("COINCIDEEEEE");
-                    stop();
-                    }
-                }
-            }
-        }*/
         }
     }
     
@@ -246,6 +238,7 @@ public class Board extends javax.swing.JPanel implements Runnable{
     public void run() {
         while(running) {
             tick();
+            //metodo que llama al metodo paintComponent()
             repaint();
         }
     }
